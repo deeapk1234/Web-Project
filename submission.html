@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TASK2</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #222;
+        }
+
+        .main {
+            width: 50%;
+            background: linear-gradient(90deg, #ebeb18, #df8b0c);
+            color: #fff;
+            margin: 100px auto 0;
+            border-radius: 20px;
+            padding: 40px 35px;
+            text-align: center;
+        }
+
+        .weather h1 {
+            font-size: 45px;
+            font-weight: 500;
+            margin-top: -10px;
+        }
+
+        .info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            margin-top: 50px;
+        }
+
+        .col {
+            display: flex;
+            align-items: center;
+            text-align: left;
+        }
+
+
+        .humid{
+            font-size: 28px;
+            margin-top: -6px;
+        }
+        .windspeed{
+            font-size: 28px;
+            margin-top: -6px;
+        }
+        .pressure {
+            font-size: 28px;
+            margin-top: -6px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main">
+        <div class="weather">
+            
+                <div class="name-temp">
+                    <h1 class="temp">10°C</h1>
+                    <h2 class="city">GUWAHATI</h2>
+                </div>
+            
+
+            <div class="info">
+                <div class="col">
+                    <div>
+                        <p class="humid">90%</p>
+                        <p>Humidity</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div>
+                        <p class="windspeed">20 Km/h</p>
+                        <p>Wind Speed</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div>
+                        <p class="pressure">1000 mPa</p>
+                        <p>Pressure</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    navigator.geolocation.getCurrentPosition((position) => {
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
+
+    const apikey = "210cff5ae60895d5b44aba2b13d47b3b";
+    const apiurl = `https://api.openweathermap.org/data/2.5/weather?&units=metric&lat=${lat}&lon=${lon}&appid=${apikey}`;
+    
+    
+    const checkweather = async () => {
+        const response = await fetch(apiurl);
+        const data = await response.json();
+        console.log(data);
+
+        document.querySelector(".city").innerHTML = data.name;
+        document.querySelector(".temp").innerHTML = data.main.temp + "°C";
+        document.querySelector(".humid").innerHTML = data.main.humidity + "%";
+        document.querySelector(".windspeed").innerHTML = data.wind.speed + " km/h";
+        document.querySelector(".pressure").innerHTML = data.main.pressure + " mPa";
+
+    };
+    checkweather();
+});
+
+     </script>
+
+
+</body>
+
+</html>
